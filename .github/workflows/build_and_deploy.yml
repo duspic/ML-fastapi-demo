@@ -2,6 +2,8 @@ name: build_image_and_deploy_to_dockerhub
 
 on:
   push:
+    branches: 
+    - main # only main, so the PR from the cron job doesn't trigger it
 
 jobs:
   build-and-push:

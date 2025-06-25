@@ -55,6 +55,7 @@ def search(query: str = Query(min_length=3), no_of_results: int = 5) -> pydantic
 
     results = []
     for idx in top_indices:
+        JOBS_DF.reset_index(inplace=True)
         idx = int(idx)
         job = JOBS_DF.iloc[idx].to_dict()
         job["score"] = round(float(combined_score[idx]), 3)
