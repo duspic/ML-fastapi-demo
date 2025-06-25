@@ -75,7 +75,7 @@ def main():
     for job_id in unique_job_ids:
         url = JOB_POSTING_BASE_URL.format(job_id)
 
-        res = requests.get(url, headers=HEADERS, timeout=200)
+        res = requests.get(url, headers=HEADERS, timeout=500)
         soup = BeautifulSoup(res.text, 'html.parser')
 
         job_info = extract_info_from_posting(soup)
