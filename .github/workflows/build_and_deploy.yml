@@ -27,6 +27,9 @@ jobs:
         run: |
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/ml-fastapi-demo:latest
 
+  run-latest-image-on-aws:
+    runs-on: ubuntu-latest
+    steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
