@@ -1,0 +1,59 @@
+name: scrape_and_embed_job_data
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * *" # at 6 am every day - https://crontab.guru/#0_6_*_*_*
+
+jobs:
+  run_data_pipeline:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: pull code from repo
+        uses: actions/checkout@v4
+        with: 
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      
+      - name: setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.10.14 # the same as in the dockerfile
+          cache: "pip"
+
+      - name: install dependencies
+        run: pip install -r requirements.txt
+
+      - name: scrape linkedin data
+        run: python3 scripts/scrape.py
+
+      - name: embed scraped data
+        run: python3 scripts/embed_job_data.py
+
+      - name: Commit and prepare PR
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b automated/daily-update || git checkout automated/daily-update
+          git add -A
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          else
+            git commit -m "Automated update: scrape and embed job data"
+          fi
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          commit-message: "Automated update: scrape and embed job data"
+          title: "Data pipeline update"
+          body: |
+            Automatic PR after data pipeline - review how many jobs are scraped!
+          branch: "automated/daily-update"
+          delete-branch: true
+
+
+
