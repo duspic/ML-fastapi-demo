@@ -1,0 +1,7 @@
+fastapi[standard]==0.115
+requests==2.32
+beautifulsoup4==4.13
+pandas==2.3
+sentence-transformers==4.1.0
+aiohttp
+async-timeout
