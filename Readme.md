@@ -1,7 +1,9 @@
 # TRY IT OUT
 
 **The public URL is:
-ml-fastapi-demo-ALB-672004778.eu-north-1.elb.amazonaws.com**
+~~ml-fastapi-demo-ALB-672004778.eu-north-1.elb.amazonaws.com~~
+THE SERVICE IS CLOSED, SINCE IT COST ME A LOT TO RUN JUST FOR THE DEMO
+Check out the demo video at /video**
 
 **try to go on /docs to use the fastapi's inbuilt interactive documentation.
 or simply to /search?query= and insert your query**
@@ -73,7 +75,6 @@ Also, there is a .github folder, in which there are two scripts.
 The ECS is made publicly available through an Application Load Balancer, which gives it the DNS
 
 ---
-
 
 In a real-world scenario, everything should be better!
 
